@@ -36,7 +36,7 @@ def norm_wmd(s1, s2):
 
 
 def sent2vec(s):
-    words = str(s).lower() #.decode('utf-8')
+    words = str(s).lower()
     words = word_tokenize(words)
     words = [w for w in words if not w in stop_words]
     words = [w for w in words if w.isalpha()]
@@ -51,7 +51,7 @@ def sent2vec(s):
     return v / np.sqrt((v ** 2).sum())
 
 
-data = pd.read_csv('input/quora_duplicate_questions.tsv', sep='\t')
+data = pd.read_csv('input/train.csv.zip', compression='zip')
 data = data.drop(['id', 'qid1', 'qid2'], axis=1)
 
 
@@ -118,8 +118,5 @@ data['skew_q1vec'] = [skew(x) for x in np.nan_to_num(question1_vectors)]
 data['skew_q2vec'] = [skew(x) for x in np.nan_to_num(question2_vectors)]
 data['kur_q1vec'] = [kurtosis(x) for x in np.nan_to_num(question1_vectors)]
 data['kur_q2vec'] = [kurtosis(x) for x in np.nan_to_num(question2_vectors)]
-
-#cPickle.dump(question1_vectors, open('data/q1_w2v.pkl', 'wb'), -1)
-#cPickle.dump(question2_vectors, open('data/q2_w2v.pkl', 'wb'), -1)
 
 data.to_csv('input/train_features.csv', index=False)
