@@ -28,6 +28,6 @@ echo "import nltk;nltk.download('all')" | python
 
 Generate features
 ```
-python feature_engineering.py
-python feature_engineering_test.py
+nohup python feature_engineering.py &
+nohup python feature_engineering_test.py &
 ```
