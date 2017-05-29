@@ -283,8 +283,8 @@ def main():
 
     watchlist = [(d_train, 'train'), (d_valid, 'valid')]
 
-    #bst = xgb.train(params, d_train, 2500, watchlist, early_stopping_rounds=50, verbose_eval=50)
-    bst = xgb.train(params, d_train, 100, watchlist, early_stopping_rounds=50, verbose_eval=50)
+    bst = xgb.train(params, d_train, 2500, watchlist, early_stopping_rounds=50, verbose_eval=50)
+    # bst = xgb.train(params, d_train, 100, watchlist, early_stopping_rounds=50, verbose_eval=50)
     print(log_loss(y_valid, bst.predict(d_valid)))
     bst.save_model(args.save + '.mdl')
 
