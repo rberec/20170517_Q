@@ -308,7 +308,7 @@ def main():
     sub = pd.DataFrame()
     sub['test_id'] = df_test['test_id']
     sub['is_duplicate'] = p_test
-    sub.to_csv('./output.zip', compression="zip")
+    sub.to_csv('output.csv', index=False)
 
 if __name__ == '__main__':
     main()
