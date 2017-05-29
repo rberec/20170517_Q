@@ -21,6 +21,10 @@ python -m nltk.downloader stopwords
 cd ..
 ```
 
+Download nltk data
+```
+echo "import nltk;nltk.download('all')" | python
+```
 
 Generate features
 ```
