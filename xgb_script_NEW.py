@@ -196,15 +196,15 @@ def main():
                         help='save_file_names')
     args = parser.parse_args()
 
-    df_train = pd.read_csv('./input/train_features.csv', encoding="ISO-8859-1")
+    df_train = pd.read_csv('./input/train_features.csv.zip', compression='zip')
     X_train_ab = df_train.iloc[:, 2:-1]
     X_train_ab = X_train_ab.drop('euclidean_distance', axis=1)
     X_train_ab = X_train_ab.drop('jaccard_distance', axis=1)
 
-    df_train = pd.read_csv('./input/train.csv')
+    df_train = pd.read_csv('./input/train.csv.zip', compression='zip')
     df_train = df_train.fillna(' ')
 
-    df_test = pd.read_csv('./input/test.csv')
+    df_test = pd.read_csv('./input/test.csv.zip', compression='zip')
     ques = pd.concat([df_train[['question1', 'question2']], \
         df_test[['question1', 'question2']]], axis=0).reset_index(drop='index')
     q_dict = defaultdict(set)
@@ -290,12 +290,12 @@ def main():
 
 
     print('Building Test Features')
-    df_test = pd.read_csv('./input/test_features.csv', encoding="ISO-8859-1")
+    df_test = pd.read_csv('./input/test_features.csv.zip', compression='zip')
     x_test_ab = df_test.iloc[:, 2:-1]
     x_test_ab = x_test_ab.drop('euclidean_distance', axis=1)
     x_test_ab = x_test_ab.drop('jaccard_distance', axis=1)
     
-    df_test = pd.read_csv('./input/test.csv')
+    df_test = pd.read_csv('./input/test.csv.zip', compression='zip')
     df_test = df_test.fillna(' ')
 
     df_test['question1'] = df_test['question1'].map(lambda x: str(x).lower().split())
@@ -308,7 +308,7 @@ def main():
     sub = pd.DataFrame()
     sub['test_id'] = df_test['test_id']
     sub['is_duplicate'] = p_test
-    sub.to_csv('./predictions/output.gz', compression="gzip")
+    sub.to_csv('./output.zip', compression="zip")
 
 if __name__ == '__main__':
     main()
