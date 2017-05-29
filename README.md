@@ -1,5 +1,10 @@
 # 20170517_Q
 
+```
+wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh
+bash Anaconda3-4.3.1-Linux-x86_64.sh
+```
+
 https://github.com/abhishekkrthakur/is_that_a_duplicate_quora_question
 
 Download data
