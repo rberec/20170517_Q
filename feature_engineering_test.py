@@ -36,7 +36,7 @@ def norm_wmd(s1, s2):
 
 
 def sent2vec(s):
-    words = str(s).lower() #.decode('utf-8')
+    words = str(s).lower()
     words = word_tokenize(words)
     words = [w for w in words if not w in stop_words]
     words = [w for w in words if w.isalpha()]
@@ -51,10 +51,9 @@ def sent2vec(s):
     return v / np.sqrt((v ** 2).sum())
 
 
-data = pd.read_csv('input/test.csv')
+data = pd.read_csv('input/test.csv.zip', compression='zip')
 data = data.drop(['test_id'], axis=1)
 
-'''
 data['len_q1'] = data.question1.apply(lambda x: len(str(x)))
 data['len_q2'] = data.question2.apply(lambda x: len(str(x)))
 data['diff_len'] = data.len_q1 - data.len_q2
@@ -71,10 +70,6 @@ data['fuzz_partial_token_sort_ratio'] = data.apply(lambda x: fuzz.partial_token_
 data['fuzz_token_set_ratio'] = data.apply(lambda x: fuzz.token_set_ratio(str(x['question1']), str(x['question2'])), axis=1)
 data['fuzz_token_sort_ratio'] = data.apply(lambda x: fuzz.token_sort_ratio(str(x['question1']), str(x['question2'])), axis=1)
 
-print ("storing intermediate results")
-data.to_csv('input/test_features.csv', index=False)
-
-
 model = gensim.models.KeyedVectors.load_word2vec_format('input/GoogleNews-vectors-negative300.bin.gz', binary=True)
 data['wmd'] = data.apply(lambda x: wmd(x['question1'], x['question2']), axis=1)
 
@@ -86,9 +81,6 @@ data['norm_wmd'] = data.apply(lambda x: norm_wmd(x['question1'], x['question2'])
 
 del model, norm_model
 
-print ("storing intermediate results")
-data.to_csv('input/test_features.csv', index=False)
-'''
 question1_vectors = np.zeros((data.shape[0], 300))
 error_count = 0
 
@@ -125,8 +117,5 @@ data['skew_q1vec'] = [skew(x) for x in np.nan_to_num(question1_vectors)]
 data['skew_q2vec'] = [skew(x) for x in np.nan_to_num(question2_vectors)]
 data['kur_q1vec'] = [kurtosis(x) for x in np.nan_to_num(question1_vectors)]
 data['kur_q2vec'] = [kurtosis(x) for x in np.nan_to_num(question2_vectors)]
-
-#cPickle.dump(question1_vectors, open('data/q1_w2v.pkl', 'wb'), -1)
-#cPickle.dump(question2_vectors, open('data/q2_w2v.pkl', 'wb'), -1)
 
 data.to_csv('input/test_features2.csv', index=False)
