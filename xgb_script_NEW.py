@@ -179,7 +179,7 @@ def build_features(data, stops, weights):
     f = functools.partial(char_diff_unique_stop, stops=stops) 
     X['char_diff_unq_stop'] = data.apply(f, axis=1, raw=True) #13
 
-    X['common_words'] = data.apply(common_words, axis=1, raw=True)  #14
+    # X['common_words'] = data.apply(common_words, axis=1, raw=True)  #14
     X['total_unique_words'] = data.apply(total_unique_words, axis=1, raw=True)  #15
 
     f = functools.partial(total_unq_words_stop, stops=stops)
